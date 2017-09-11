@@ -15,17 +15,48 @@ ELSE( PlusLib_FOUND )
     MESSAGE( FATAL_ERROR "This project requires PlusLib for generating rendering images of STL model files. Please verify configuration.")
 ENDIF( PlusLib_FOUND )
 
-# Need subversion for the automatic update of the repository
-MARK_AS_ADVANCED(CLEAR Subversion_SVN_EXECUTABLE)
-FIND_FILE(Subversion_SVN_EXECUTABLE svn${CMAKE_EXECUMODEL_TABLE_SUFFIX} 
-  PATHS 
-    "c:/Program Files/TortoiseSVN/bin/"
-    "c:/Program Files/SlikSvn/bin/"
-  )
-FIND_PACKAGE(Subversion REQUIRED)
+SET(PlusModelCatalog_REVISION "NA")
+SET(PlusModelCatalog_SHORT_REVISION "NA")
+FUNCTION(GIT_LAST_CHANGED_TAG filename outputVarName)
+  set(outputVarName "NA" PARENT_SCOPE)
+ENDFUNCTION()
 
-Subversion_WC_INFO("${CMAKE_CURRENT_SOURCE_DIR}" PlusCatalog)
-SET(CATALOG_URL "https://app.assembla.com/spaces/plus/subversion/source/${PlusCatalog_WC_REVISION}/trunk/PlusModelCatalog")
+IF(NOT PLUS_OFFLINE_BUILD)
+  # Need git for the automatic update of the repository
+  FIND_PACKAGE(Git)
+  IF(Git_FOUND)
+    EXECUTE_PROCESS(COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD 
+      OUTPUT_VARIABLE PlusModelCatalog_REVISION 
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      )
+    STRING(REGEX REPLACE "\n$" "" PlusModelCatalog_REVISION "${PlusModelCatalog_REVISION}")
+    STRING(REGEX REPLACE "\r$" "" PlusModelCatalog_REVISION "${PlusModelCatalog_REVISION}")
+    
+    MESSAGE(STATUS "Current git hash is ${PlusModelCatalog_REVISION}")
+
+    EXECUTE_PROCESS(COMMAND "${GIT_EXECUTABLE}" rev-parse --short HEAD 
+      OUTPUT_VARIABLE PlusModelCatalog_SHORT_REVISION 
+      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      )
+    STRING(REGEX REPLACE "\n$" "" PlusModelCatalog_SHORT_REVISION "${PlusModelCatalog_SHORT_REVISION}")
+    STRING(REGEX REPLACE "\r$" "" PlusModelCatalog_SHORT_REVISION "${PlusModelCatalog_SHORT_REVISION}")
+
+    FUNCTION(GIT_LAST_CHANGED_TAG filename outputVarName)
+      EXECUTE_PROCESS(COMMAND "${GIT_EXECUTABLE}" log -n 1 --date=short --pretty=format:%ad-%h -- ${filename}
+        OUTPUT_VARIABLE gitTag
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        )
+      STRING(REGEX REPLACE "\n$" "" gitTag "${gitTag}")
+      STRING(REGEX REPLACE "\r$" "" gitTag "${gitTag}")
+      SET(${outputVarName} ${gitTag} PARENT_SCOPE)
+    ENDFUNCTION()
+
+  ELSE()
+    MESSAGE(WARNING "Git tool not found. Cannot retrieve revision information from repository")
+  ENDIF()
+ENDIF()
+
+SET(CATALOG_URL "https://github.com/PlusToolkit/PlusModelCatalog/tree/${PlusModelCatalog_REVISION}")
 SET(HTML_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/html")
 
 INCLUDE(CatalogHtmlWriterMacros.cmake)
