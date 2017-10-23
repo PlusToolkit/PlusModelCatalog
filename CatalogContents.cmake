@@ -63,6 +63,10 @@ MODEL_TABLE_END()
 
 MODEL_TABLE_START("Tracking fixtures" "See below a list of fixtures that can be used for mounting tracker markers (both optical and electromagnetic) on various tools and objects." TrackingFixtures)
 MODEL_TABLE_ROW(
+  ID "Block4x4-ThreeHoles"
+  DESCRIPTION "Block of solid material 40x40x14 mm size, with an extruded interface with three M4 holes 7 mm apart. The block can be edited to cut out an anatomical part, so the final product will interface with an anatomy."
+  )
+MODEL_TABLE_ROW(
   ID "CauteryGrabber"
   DESCRIPTION "New version for fixing a tracker to a cautery. For clamp tightening use hex-head cap screw, M6 thread, 30 mm long with a matching wing nut. For assembly with SensorHolder-OneHole use M4 bolt."
   )
