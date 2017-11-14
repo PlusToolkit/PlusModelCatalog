@@ -115,6 +115,13 @@ MODEL_TABLE_ROW(
   DESCRIPTION "Parts for tracking Telemed MicrUs L12 ultrasound probe"
   )
 MODEL_TABLE_ROW(
+  ID "Telemed-L12-ClipOn"
+  IMAGE_PRINTABLE_FILE "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.png"
+  PRINTABLE_FILES
+    "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL"
+  DESCRIPTION "A plastic holder for the Telemed L12 ultrasound probe, without moving parts."
+  )
+MODEL_TABLE_ROW(
   ID "SensorHolder_2.0"
   DESCRIPTION "New sensor holder design. This will replace SensorHolder-Ordered_2mm_1.0 eventually. Holds either a Model 800 Ascension EM sensor, or another PLUS fixture, e.g. for holding MicronTracker markers. This part is frequently part of an assembly, but can also be used by itself."
   )
