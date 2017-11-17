@@ -116,7 +116,7 @@ MODEL_TABLE_ROW(
   )
 MODEL_TABLE_ROW(
   ID "Telemed-L12-ClipOn"
-  IMAGE_PRINTABLE_FILE "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.png"
+  IMAGE_PRINTABLE_FILE "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.stl"
   PRINTABLE_FILES
     "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL"
   DESCRIPTION "A plastic holder for the Telemed L12 ultrasound probe, without moving parts."
