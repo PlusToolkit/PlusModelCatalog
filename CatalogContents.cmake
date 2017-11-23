@@ -75,6 +75,16 @@ MODEL_TABLE_ROW(
   DESCRIPTION "Clip to mount a MarkerHolder or 8mm Ascension EM sensor to an object. With a wing to make it easier to fix it by glue or screws."
   )
 MODEL_TABLE_ROW(
+  ID "Stylus_Polaris"
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres."
+  PRINTABLE_FILES "TrackingFixtures/StealthStation/Stylus_Polaris.STL"
+  )
+MODEL_TABLE_ROW(
+  ID "Ultrasound_Polaris"
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres."
+  PRINTABLE_FILES "TrackingFixtures/StealthStation/Ultrasound_Polaris.STL"
+  )
+MODEL_TABLE_ROW(
   ID "MarkerHolder_120mm-even_long"
   DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
   PRINTABLE_FILES
@@ -126,7 +136,7 @@ MODEL_TABLE_ROW(
   IMAGE_FILE "TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.png"
   PRINTABLE_FILES
     "TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.STL"
-  DESCRIPTION "A plastic holder for the Telemed L12 ultrasound probe, without moving parts."
+  DESCRIPTION "Clip-on part for GE ML6-15-D ultrasound probe."
   )
 MODEL_TABLE_ROW(
   ID "SensorHolder_2.0"
