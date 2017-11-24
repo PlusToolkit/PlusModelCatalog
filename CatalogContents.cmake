@@ -76,13 +76,18 @@ MODEL_TABLE_ROW(
   )
 MODEL_TABLE_ROW(
   ID "Stylus_Polaris"
-  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres."
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND"
   PRINTABLE_FILES "TrackingFixtures/StealthStation/Stylus_Polaris.STL"
   )
 MODEL_TABLE_ROW(
   ID "Ultrasound_Polaris"
-  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres."
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND"
   PRINTABLE_FILES "TrackingFixtures/StealthStation/Ultrasound_Polaris.STL"
+  )
+MODEL_TABLE_ROW(
+  ID "ArmL-30"
+  DESCRIPTION "Connector between e.g. an ultrasound clip and polaris markers."
+  PRINTABLE_FILES "TrackingFixtures/ArmL-30.STL"
   )
 MODEL_TABLE_ROW(
   ID "NeedleClip-Assembly_16-20G"
