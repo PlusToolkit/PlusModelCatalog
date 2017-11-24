@@ -85,34 +85,6 @@ MODEL_TABLE_ROW(
   PRINTABLE_FILES "TrackingFixtures/StealthStation/Ultrasound_Polaris.STL"
   )
 MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-even_long"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-even_long.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
-  )
-MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-odd_long"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-odd_long.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
-  )
-MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-even_short"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-even_short.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
-  )
-MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-odd_short"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-odd_short.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
-  )
-MODEL_TABLE_ROW(
   ID "NeedleClip-Assembly_16-20G"
   DESCRIPTION "Clamps to a needle of size 16-20 G through a sterile bag."
   )
@@ -160,8 +132,7 @@ MODEL_TABLE_ROW(
   )
 # Add remaining experimental tools
 SET(EXPERIMENTAL_TRACKING_FIXTURES
-  MarkerHolder_120mm_Winged_1.0
-  MarkerHolder_120mm-Short_2.0
+  MicronPlate01
   NeedleGrabberFlappy-Assembly_1.0
   Plug-L_60mm_3.0
   SensorHolder-GlueHoles-Ordered_2mm_1.0
