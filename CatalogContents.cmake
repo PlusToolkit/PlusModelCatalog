@@ -63,6 +63,10 @@ MODEL_TABLE_END()
 
 MODEL_TABLE_START("Tracking fixtures" "See below a list of fixtures that can be used for mounting tracker markers (both optical and electromagnetic) on various tools and objects." TrackingFixtures)
 MODEL_TABLE_ROW(
+  ID "Block4x4-ThreeHoles"
+  DESCRIPTION "Block of solid material 40x40x14 mm size, with an extruded interface with three M4 holes 7 mm apart. The block can be edited to cut out an anatomical part, so the final product will interface with an anatomy."
+  )
+MODEL_TABLE_ROW(
   ID "CauteryGrabber"
   DESCRIPTION "New version for fixing a tracker to a cautery. For clamp tightening use hex-head cap screw, M6 thread, 30 mm long with a matching wing nut. For assembly with SensorHolder-OneHole use M4 bolt."
   )
@@ -71,32 +75,19 @@ MODEL_TABLE_ROW(
   DESCRIPTION "Clip to mount a MarkerHolder or 8mm Ascension EM sensor to an object. With a wing to make it easier to fix it by glue or screws."
   )
 MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-even_long"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-even_long.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
+  ID "Stylus_Polaris"
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND"
+  PRINTABLE_FILES "TrackingFixtures/StealthStation/Stylus_Polaris.STL"
   )
 MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-odd_long"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-odd_long.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
+  ID "Ultrasound_Polaris"
+  DESCRIPTION "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND"
+  PRINTABLE_FILES "TrackingFixtures/StealthStation/Ultrasound_Polaris.STL"
   )
 MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-even_short"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-even_short.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
-  )
-MODEL_TABLE_ROW(
-  ID "MarkerHolder_120mm-odd_short"
-  DESCRIPTION "Holder for visible-light printed black&white optical tracker markers (such as MicronTracker)."
-  PRINTABLE_FILES
-    "TrackingFixtures/MarkerHolder_120mm-odd_short.stl"
-    "TrackingFixtures/Marker_01-04.pdf"
+  ID "ArmL-30"
+  DESCRIPTION "Connector between e.g. an ultrasound clip and polaris markers."
+  PRINTABLE_FILES "TrackingFixtures/ArmL-30.STL"
   )
 MODEL_TABLE_ROW(
   ID "NeedleClip-Assembly_16-20G"
@@ -109,6 +100,20 @@ MODEL_TABLE_ROW(
     "TrackingFixtures/TelemedHolder_L12_MarkedSide.stl"
     "TrackingFixtures/TelemedHolder-L12_UnmarkedSide.stl"
   DESCRIPTION "Parts for tracking Telemed MicrUs L12 ultrasound probe"
+  )
+MODEL_TABLE_ROW(
+  ID "Telemed-L12-ClipOn"
+  IMAGE_PRINTABLE_FILE "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.stl"
+  PRINTABLE_FILES
+    "TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL"
+  DESCRIPTION "A plastic holder for the Telemed L12 ultrasound probe, without moving parts."
+  )
+MODEL_TABLE_ROW(
+  ID "GeMl615D_Clip_v01"
+  IMAGE_FILE "TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.png"
+  PRINTABLE_FILES
+    "TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.STL"
+  DESCRIPTION "Clip-on part for GE ML6-15-D ultrasound probe."
   )
 MODEL_TABLE_ROW(
   ID "SensorHolder_2.0"
@@ -132,8 +137,7 @@ MODEL_TABLE_ROW(
   )
 # Add remaining experimental tools
 SET(EXPERIMENTAL_TRACKING_FIXTURES
-  MarkerHolder_120mm_Winged_1.0
-  MarkerHolder_120mm-Short_2.0
+  MicronPlate01
   NeedleGrabberFlappy-Assembly_1.0
   Plug-L_60mm_3.0
   SensorHolder-GlueHoles-Ordered_2mm_1.0
