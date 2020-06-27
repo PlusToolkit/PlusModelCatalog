@@ -1,0 +1,2 @@
+fCal phantom customized for tube-shaped echo probes such as intracardiac echo (ICE) catheters and transesophageal echo (TEE) probes.
+Developed by Robert Kreher (Otto-von-Guericke-University Magdeburg, Germany (https://www.ovgu.de/), Stimulate Research Campus (https://www.forschungscampus-stimulate.de/).

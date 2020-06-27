@@ -1,0 +1,42 @@
+<PhantomDefinition>
+  <Description
+    Name="fCAL"
+    Type="Multi-N"
+    Version="1.0"
+    WiringVersion="1.0"
+    Institution="Otto-von-Guericke-University Magdeburg, Germany (https://www.ovgu.de/), Stimulate Research Campus (https://www.forschungscampus-stimulate.de/)" />
+  <Geometry>
+    <Pattern Type="NWire">
+      <Wire Name="7:F3_f3" EndPointFront="25.0 0.0 15.0" EndPointBack="25.0 40.0 15.0" />
+      <Wire Name="8:G3_h3" EndPointFront="30.0 0.0 15.0" EndPointBack="35.0 40.0 15.0" />
+      <Wire Name="9:I3_i3" EndPointFront="40.0 0.0 15.0" EndPointBack="40.0 40.0 15.0" />
+    </Pattern>
+    <Pattern Type="NWire">
+      <Wire Name="7:F4_f4" EndPointFront="25.0 0.0 10.0" EndPointBack="25.0 40.0 10.0" />
+      <Wire Name="8:H4_g4" EndPointFront="35.0 0.0 10.0" EndPointBack="30.0 40.0 10.0" />
+      <Wire Name="9:I4_i4" EndPointFront="40.0 0.0 10.0" EndPointBack="40.0 40.0 10.0" />
+    </Pattern>
+    <Pattern Type="NWire">
+      <Wire Name="7:F5_f5" EndPointFront="25.0 0.0 5.0" EndPointBack="25.0 40.0 5.0" />
+      <Wire Name="8:H5_g5" EndPointFront="35.0 0.0 5.0" EndPointBack="30.0 40.0 5.0" />
+      <Wire Name="9:I5_i5" EndPointFront="40.0 0.0 5.0" EndPointBack="40.0 40.0 5.0" />
+    </Pattern>
+    <Pattern Type="NWire">
+      <Wire Name="7:F6_f6" EndPointFront="25.0 0.0 0.0" EndPointBack="25.0 40.0 0.0" />
+      <Wire Name="8:G6_h6" EndPointFront="30.0 0.0 0.0" EndPointBack="35.0 40.0 0.0" />
+      <Wire Name="9:I6_i6" EndPointFront="40.0 0.0 0.0" EndPointBack="40.0 40.0 0.0" />
+    </Pattern>
+    <Landmarks>
+      <Landmark Name="#1" Position="-22.5   -9.5   30.0" />
+      <Landmark Name="#8" Position=" 82.5   -9.5   -5.0" />
+      <Landmark Name="#9" Position="-29.5  40.0   27.5" />
+      <Landmark Name="#12" Position="-29.5  22.5   -5.0" />
+      <Landmark Name="#13" Position="-20.0  40.0   37.0" />
+      <Landmark Name="#16" Position=" 80.0   0.0   37.0" />
+      <Landmark Name="#17" Position=" 89.5   -5.0  27.5" />
+      <Landmark Name="#20" Position=" 89.5  40.0  -2.5 " />
+      <Landmark Name="#21" Position=" 82.5  49.5   30.0" />
+      <Landmark Name="#28" Position="-22.5  49.5   -5.0" />
+    </Landmarks>
+  </Geometry>
+</PhantomDefinition>

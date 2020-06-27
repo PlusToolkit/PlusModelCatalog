@@ -174,6 +174,15 @@ MODEL_TABLE_ROW(
   EDIT_LINK "${CATALOG_URL}/fCalPhantom/fCal_3"
   DESCRIPTION "Phantom for freehand spatial ultrasound calibration for deep structures (up to 30 cm)."
   )
+MODEL_TABLE_ROW(
+  ID "fCal-Echo1.0"
+  IMAGE_FILE "fCalPhantom/fCal_Echo/fCal_Echo1.0.png"
+  PRINTABLE_FILES
+    "fCalPhantom/fCal_Echo/fCal_Echo1.0.stl"
+  EDIT_LINK "${CATALOG_URL}/fCalPhantom/fCal_Echo"
+  DESCRIPTION "Phantom for freehand spatial ultrasound calibration of tube-shaped echo probes such as intracardiac echo (ICE) catheters and transesophageal echo (TEE) probes.
+  <br/>Developed by Robert Kreher (<a href=\"https://www.ovgu.de/\">Otto-von-Guericke-University Magdeburg, Germany</a>, <a href=\"https://www.forschungscampus-stimulate.de/\">Stimulate Research Campus</a>)."
+  )
 MODEL_TABLE_END()
 
 MODEL_TABLE_START("Anatomy" "See below a list of anatomical models for simulation and testing." "Anatomy")
