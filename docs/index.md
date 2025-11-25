@@ -1,12 +1,11 @@
-# PlusModelCatalog Documentation
+# PlusModelCatalog
 
-Welcome to the Plus Toolkit 3D Model Catalog documentation.
+Welcome to the Plus Toolkit 3D Model Catalog
 
 ```{toctree}
 :maxdepth: 2
 :caption: Contents:
-
-catalog/index
+:hidden:
 catalog/tools
 catalog/tracking-fixtures
 catalog/fcal-phantoms
