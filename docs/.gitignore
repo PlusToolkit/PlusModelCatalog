@@ -1,0 +1,24 @@
+# Sphinx build outputs
+_build/
+.doctrees/
+
+# Generated rendered images (regenerated on each build)
+_static/rendered/
+
+# Python virtual environment
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Generated catalog pages (regenerated on each build)
+catalog/tools.md
+catalog/tracking-fixtures.md
+catalog/fcal-phantoms.md
+catalog/anatomy.md
+catalog/needletutor.md
+
+# Keep catalog/index.md as it's manually written
