@@ -58,13 +58,14 @@ def render_stl_to_image(stl_file, output_image, width=400, height=300,
     # Create renderer
     renderer = vtk.vtkRenderer()
     renderer.AddActor(actor)
-    renderer.SetBackground(1.0, 1.0, 1.0)  # White background
+    renderer.SetBackground(1.0, 1.0, 1.0)  # White background (will be made transparent)
     
     # Create render window
     render_window = vtk.vtkRenderWindow()
     render_window.SetOffScreenRendering(1)
     render_window.AddRenderer(renderer)
     render_window.SetSize(width, height)
+    render_window.SetAlphaBitPlanes(1)  # Enable alpha channel
     
     # Setup camera
     camera = renderer.GetActiveCamera()
@@ -101,7 +102,7 @@ def render_stl_to_image(stl_file, output_image, width=400, height=300,
     window_to_image = vtk.vtkWindowToImageFilter()
     window_to_image.SetInput(render_window)
     window_to_image.SetScale(1)
-    window_to_image.SetInputBufferTypeToRGB()
+    window_to_image.SetInputBufferTypeToRGBA()  # Include alpha channel
     window_to_image.ReadFrontBufferOff()
     window_to_image.Update()
     
