@@ -24,16 +24,18 @@ class ModelCatalogGenerator:
     def get_git_last_modified(self, file_path: Path) -> str:
         """Get last git commit date for a file"""
         try:
+            # Get relative path from repo root
+            rel_path = file_path.relative_to(self.repo_root)
             result = subprocess.run(
-                ['git', 'log', '-1', '--format=%ad', '--date=short', str(file_path)],
+                ['git', 'log', '-1', '--format=%ad', '--date=short', '--', str(rel_path)],
                 cwd=self.repo_root,
                 capture_output=True,
                 text=True
             )
-            if result.returncode == 0:
+            if result.returncode == 0 and result.stdout.strip():
                 return result.stdout.strip()
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"Git error for {file_path}: {e}")
         return "Unknown"
     
     def render_stl(self, stl_path: Path, output_path: Path) -> bool:
@@ -127,7 +129,9 @@ class ModelCatalogGenerator:
             md += f"\n[View source files on GitHub]({model['source_url']})\n"
             md += ":::\n\n"
             md += "::::\n\n"
-            md += "---\n\n"
+            # Only add separator if not the last model
+            if model != models[-1]:
+                md += "---\n\n"
         
         return md
     

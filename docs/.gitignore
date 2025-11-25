@@ -15,10 +15,6 @@ __pycache__/
 *.pyo
 
 # Generated catalog pages (regenerated on each build)
-catalog/tools.md
-catalog/tracking-fixtures.md
-catalog/fcal-phantoms.md
-catalog/anatomy.md
-catalog/needletutor.md
+catalog/*
 
 # Keep catalog/index.md as it's manually written
