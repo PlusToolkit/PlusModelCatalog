@@ -69,10 +69,20 @@ class ModelCatalogGenerator:
         List[Path]
             Sorted list of matching STL files
         """
+        # Find both .stl and .STL files (case-insensitive)
         if recursive:
-            all_files = sorted(directory.glob('**/*.stl'))
+            all_files = sorted(list(directory.glob('**/*.stl')) + list(directory.glob('**/*.STL')))
         else:
-            all_files = sorted(directory.glob('*.stl'))
+            all_files = sorted(list(directory.glob('*.stl')) + list(directory.glob('*.STL')))
+
+        # Remove duplicates (in case filesystem is case-insensitive)
+        seen = set()
+        unique_files = []
+        for f in all_files:
+            if f not in seen:
+                seen.add(f)
+                unique_files.append(f)
+        all_files = unique_files
 
         # Apply include filter if specified
         if include:
@@ -324,29 +334,43 @@ class ModelCatalogGenerator:
 
     def generate_index_page(self):
         """Generate catalog index page"""
-        markdown = """# Model Catalog
+
+        # Build toctree entries
+        toctree_entries = [
+            "tools",
+            "tracking-fixtures",
+            "fcal-phantoms",
+            "anatomy",
+            "needletutor"
+        ]
+
+        # Build catalog descriptions
+        catalog_items = [
+            "- **Tools**: Tracking styluses, ultrasound probe models, surgical instruments",
+            "- **Tracking Fixtures**: Mounts and clips for attaching tracking markers",
+            "- **fCal Phantoms**: Calibration phantoms for ultrasound systems",
+            "- **Anatomy Models**: Anatomical models for training and simulation",
+            "- **Needle Tutor**: Components for needle insertion training"
+        ]
+
+        toctree = "\n".join(toctree_entries)
+        catalog_list = "\n".join(catalog_items)
+
+        markdown = f"""# Model Catalog
 
 Browse the 3D printable models organized by category:
 
-```{toctree}
+```{{toctree}}
 :maxdepth: 1
 
-tools
-tracking-fixtures
-fcal-phantoms
-anatomy
-needletutor
+{toctree}
 ```
 
 ## About the Catalog
 
 This catalog contains 3D printable models (STL files) for:
 
-- **Tools**: Tracking styluses, ultrasound probe models, surgical instruments
-- **Tracking Fixtures**: Mounts and clips for attaching tracking markers
-- **fCal Phantoms**: Calibration phantoms for ultrasound systems
-- **Anatomy Models**: Anatomical models for training and simulation
-- **Needle Tutor**: Components for needle insertion training
+{catalog_list}
 
 ## Using the Models
 
@@ -369,7 +393,8 @@ All models are maintained in the [PlusToolkit/PlusModelCatalog](https://github.c
     def generate_all(self):
         """Generate all catalog pages"""
         print("Generating model catalog documentation...")
-        self.generate_index_page()
+
+        # Generate category pages and track which ones exist
         self.generate_tools_page()
         self.generate_tracking_fixtures_page()
         self.generate_fcal_phantoms_page()
