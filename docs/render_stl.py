@@ -50,6 +50,7 @@ def render_stl_to_image(stl_file, output_image, width=400, height=300,
 
     # Set actor properties for better visualization
     actor.GetProperty().SetColor(0.8, 0.8, 0.9)  # Light blue-gray
+    actor.GetProperty().SetOpacity(0.8)  # Slightly transparent
     actor.GetProperty().SetSpecular(0.3)
     actor.GetProperty().SetSpecularPower(20)
     actor.GetProperty().SetAmbient(0.2)
@@ -59,6 +60,9 @@ def render_stl_to_image(stl_file, output_image, width=400, height=300,
     renderer = vtk.vtkRenderer()
     renderer.AddActor(actor)
     renderer.SetBackground(1.0, 1.0, 1.0)  # White background (will be made transparent)
+    renderer.UseDepthPeelingOn()
+    renderer.SetMaximumNumberOfPeels(100)
+    renderer.SetOcclusionRatio(0.1)
 
     # Create render window
     render_window = vtk.vtkRenderWindow()
@@ -66,6 +70,7 @@ def render_stl_to_image(stl_file, output_image, width=400, height=300,
     render_window.AddRenderer(renderer)
     render_window.SetSize(width, height)
     render_window.SetAlphaBitPlanes(1)  # Enable alpha channel
+    render_window.SetMultiSamples(0)  # Disable multi-sampling for transparency
 
     # Setup camera
     camera = renderer.GetActiveCamera()
