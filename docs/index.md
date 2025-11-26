@@ -13,6 +13,13 @@ catalog/anatomy
 catalog/needletutor
 ```
 
+```{toctree}
+:maxdepth: 1
+:caption: Related Projects
+:hidden:
+PlusLib Documentation <https://pluslib.readthedocs.io/>
+```
+
 ## About
 
 This catalog contains printable 3D models of tools, tracking fixtures, phantoms, and anatomical models used in image-guided interventions with the Plus Toolkit.

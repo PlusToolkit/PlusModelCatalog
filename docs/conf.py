@@ -70,6 +70,11 @@ myst_enable_extensions = [
 
 myst_heading_anchors = 3
 
+# -- Options for intersphinx extension ---------------------------------------
+intersphinx_mapping = {
+    'pluslib': ('https://pluslib.readthedocs.io/en/latest/', None),
+}
+
 # -- GitHub integration ------------------------------------------
 html_context = {
     "display_github": True,
