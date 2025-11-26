@@ -246,6 +246,38 @@ class ModelCatalogGenerator:
             'NeedleClip-Assembly_16-20G': "Clamps to needle size 16-20 G through sterile bag.",
         }
 
+        # Define fixture groups with multiple parts
+        fixture_groups = {
+            'Telemed-MicrUs-L12-SensorHolder': {
+                'files': [
+                    'TrackingFixtures/Telemed-MicrUs-L12-SensorHolder.stl',
+                    'TrackingFixtures/TelemedHolder_L12_MarkedSide.stl',
+                    'TrackingFixtures/TelemedHolder-L12_UnmarkedSide.stl'
+                ],
+                'description': 'Parts for tracking Telemed MicrUs L12 ultrasound probe'
+            },
+            'Telemed-L12-ClipOn': {
+                'files': [
+                    'TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL'
+                ],
+                'description': 'A plastic holder for the Telemed L12 ultrasound probe, without moving parts.'
+            },
+            'GeMl615D_Clip_v01': {
+                'files': [
+                    'TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.STL'
+                ],
+                'description': 'Clip-on part for GE ML6-15-D ultrasound probe.',
+                'image': 'TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.png'
+            },
+            'PolarisAscensionPlane': {
+                'files': [
+                    'TrackingFixtures/MultiModalityTracking/PolarisAscensionPlane.STL'
+                ],
+                'description': 'Part that can be tracked by both Polaris and Ascension trackers. Includes ROM file.',
+                'additional_files': ['TrackingFixtures/MultiModalityTracking/PolarisAscensionPlane.rom']
+            }
+        }
+
         # Exclude files that are shown in Tools category
         exclude_files = [
             'Stylus_100mm.stl',
@@ -254,10 +286,55 @@ class ModelCatalogGenerator:
             'Stylus_Candycane_70mm_1.0.stl',
         ]
 
+        # Track grouped files to exclude them from individual entries
+        grouped_files = set()
+        for group_id, group_info in fixture_groups.items():
+            for f in group_info['files']:
+                filename = Path(f).name
+                grouped_files.add(filename)
+                exclude_files.append(filename)
+            if 'additional_files' in group_info:
+                for f in group_info['additional_files']:
+                    filename = Path(f).name
+                    grouped_files.add(filename)
+                    exclude_files.append(filename)
+
+        # Add grouped fixtures
+        for group_id, group_info in fixture_groups.items():
+            primary_file = self.repo_root / group_info['files'][0]
+
+            if primary_file.exists():
+                # Collect additional STL files
+                additional_stls = [self.repo_root / f for f in group_info['files'][1:]]
+
+                # Add non-STL additional files (like .rom)
+                if 'additional_files' in group_info:
+                    additional_stls.extend([self.repo_root / f for f in group_info['additional_files']])
+
+                entry = self.generate_model_entry(
+                    primary_file,
+                    group_info['description'],
+                    additional_stls if additional_stls else None
+                )
+
+                # Override image if custom one is specified
+                if 'image' in group_info:
+                    image_file = self.repo_root / group_info['image']
+                    if image_file.exists():
+                        import shutil
+                        dest_image = self.rendered_dir / f"{group_id}.png"
+                        shutil.copy(image_file, dest_image)
+                        entry['image'] = f"/_static/rendered/{group_id}.png"
+
+                entry['id'] = group_id
+                models.append(entry)
+
+        # Add ungrouped fixtures
         for stl_file in self.find_stl_files(fixtures_dir, recursive=True, exclude=exclude_files):
-            model_id = stl_file.stem
-            description = fixture_info.get(model_id, "")
-            models.append(self.generate_model_entry(stl_file, description))
+            if stl_file.name not in grouped_files:
+                model_id = stl_file.stem
+                description = fixture_info.get(model_id, "")
+                models.append(self.generate_model_entry(stl_file, description))
 
         markdown = self.generate_table_markdown(
             models,
@@ -274,11 +351,74 @@ class ModelCatalogGenerator:
         fcal_dir = self.repo_root / 'fCalPhantom'
         models = []
 
+        # Define phantom groups with their component files
+        phantom_groups = {
+            'fCal_2.0': {
+                'files': ['fCalPhantom/fCal_2/fCal_2.0.stl'],
+                'description': 'Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).',
+                'image': 'fCalPhantom/fCal_2/PhantomDefinition_fCal_2.0_Wiring_2.0.png'
+            },
+            'fCal_2.1': {
+                'files': ['fCalPhantom/fCal_2/fCal_2.1.stl'],
+                'description': 'Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).'
+            },
+            'fCal_3.1': {
+                'files': [
+                    'fCalPhantom/fCal_3/fCal_3.1.stl',
+                    'fCalPhantom/fCal_3/fCal_3.1_back.stl',
+                    'fCalPhantom/fCal_3/fCal_3.1_front.stl',
+                    'fCalPhantom/fCal_3/fCal_3.1_left.stl',
+                    'fCalPhantom/fCal_3/fCal_3.1_spacer.stl'
+                ],
+                'description': 'Phantom for freehand spatial ultrasound calibration for deep structures (up to 30 cm). Multi-part design for large format printing.',
+                'image': 'fCalPhantom/fCal_3/fCal3.1.png'
+            },
+            'fCal_Echo1.0': {
+                'files': ['fCalPhantom/fCal_Echo/fCal_Echo1.0.stl'],
+                'description': 'Phantom for freehand spatial ultrasound calibration of tube-shaped echo probes such as intracardiac echo (ICE) catheters and transesophageal echo (TEE) probes. Developed by Robert Kreher (Otto-von-Guericke-University Magdeburg, Germany, Stimulate Research Campus).',
+                'image': 'fCalPhantom/fCal_Echo/fCal_Echo1.0.png'
+            }
+        }
+
+        # Track which files have been grouped
+        grouped_files = set()
+        for group_id, group_info in phantom_groups.items():
+            primary_file = self.repo_root / group_info['files'][0]
+            additional_files = [self.repo_root / f for f in group_info['files'][1:]]
+
+            # Track all files in this group
+            for f in group_info['files']:
+                grouped_files.add(Path(f).name)
+
+            if primary_file.exists():
+                entry = self.generate_model_entry(
+                    primary_file,
+                    group_info['description'],
+                    additional_files if additional_files else None
+                )
+
+                # Override image if custom one is specified
+                if 'image' in group_info:
+                    image_file = self.repo_root / group_info['image']
+                    if image_file.exists():
+                        # Copy custom image to rendered directory
+                        rel_path = Path(group_info['image'])
+                        dest_image = self.rendered_dir / f"{group_id}.png"
+                        import shutil
+                        shutil.copy(image_file, dest_image)
+                        entry['image'] = f"/_static/rendered/{group_id}.png"
+
+                # Update ID to use the group name
+                entry['id'] = group_id
+                models.append(entry)
+
+        # Add any ungrouped STL files
         for stl_file in self.find_stl_files(fcal_dir, recursive=True):
-            models.append(self.generate_model_entry(
-                stl_file,
-                f"fCal phantom component: {stl_file.stem}"
-            ))
+            if stl_file.name not in grouped_files:
+                models.append(self.generate_model_entry(
+                    stl_file,
+                    f"fCal phantom component: {stl_file.stem}"
+                ))
 
         markdown = self.generate_table_markdown(
             models,
