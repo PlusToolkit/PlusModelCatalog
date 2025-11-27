@@ -22,9 +22,7 @@ PlusLib Documentation <https://pluslib.readthedocs.io/>
 
 ## About
 
-This catalog contains printable 3D models of tools, tracking fixtures, phantoms, and anatomical models used in image-guided interventions with the Plus Toolkit.
-
-All STL files are available for download and can be 3D printed for research and educational purposes.
+This catalog contains freely usable, 3D-printable models of tools, tracking fixtures, calibration phantoms, and anatomical models.
 
 ## Quick Links
 
@@ -37,7 +35,3 @@ All STL files are available for download and can be 3D printed for research and 
 ## Repository
 
 All models are hosted on GitHub: [PlusToolkit/PlusModelCatalog](https://github.com/PlusToolkit/PlusModelCatalog)
-
-## License
-
-See individual model files for licensing information.
