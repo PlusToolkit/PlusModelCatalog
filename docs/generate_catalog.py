@@ -15,8 +15,8 @@ class ModelCatalogGenerator:
     """Generate markdown documentation for 3D model catalog"""
 
     def __init__(self, repo_root: str, docs_dir: str, github_base_url: str):
-        self.repo_root = Path(repo_root)
-        self.docs_dir = Path(docs_dir)
+        self.repo_root = Path(repo_root).resolve()
+        self.docs_dir = Path(docs_dir).resolve()
         self.github_base_url = github_base_url
         self.rendered_dir = self.docs_dir / '_static' / 'rendered'
         self.rendered_dir.mkdir(parents=True, exist_ok=True)
@@ -177,12 +177,35 @@ class ModelCatalogGenerator:
 
         return md
 
+    def load_catalog_json(self, directory: Path) -> Dict:
+        """
+        Load catalog.json from a directory if it exists
+
+        Returns:
+        --------
+        Dict with keys: 'title', 'description', 'models', 'exclude_files'
+        """
+        catalog_file = directory / 'catalog.json'
+        if catalog_file.exists():
+            try:
+                with open(catalog_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return {
+                        'title': data.get('title', ''),
+                        'description': data.get('description', ''),
+                        'models': data.get('models', {}),
+                        'exclude_files': data.get('exclude_files', [])
+                    }
+            except Exception as e:
+                print(f"Error loading {catalog_file}: {e}")
+        return {'title': '', 'description': '', 'models': {}, 'exclude_files': []}
+
     def generate_catalog_page(self,
                               directory: Path,
-                              title: str,
-                              description: str,
-                              output_filename: str,
-                              model_definitions: Dict = {},
+                              title: str = None,
+                              description: str = None,
+                              output_filename: str = None,
+                              model_definitions: Dict = None,
                               exclude_files: List[str] = None) -> None:
         """
         Generate a catalog page with model definitions
@@ -191,8 +214,15 @@ class ModelCatalogGenerator:
         -----------
         directory : Path
             Primary directory to search for models
-        model_definitions : Dict
-            Dictionary of model definitions with format:
+        title : str (optional)
+            Page title (if None, reads from catalog.json)
+        description : str (optional)
+            Page description (if None, reads from catalog.json)
+        output_filename : str
+            Output markdown filename (e.g., 'tools.md')
+        model_definitions : Dict (optional)
+            Dictionary of model definitions (if None, reads from catalog.json)
+            Format:
             {
                 'model_id': {
                     'description': 'Model description',
@@ -203,15 +233,25 @@ class ModelCatalogGenerator:
             If 'files' is not specified, the model_id is treated as a standalone model.
             If 'files' has multiple entries, they are grouped together.
             First .stl file in 'files' is used as primary for rendering; others are additional downloads.
-        title : str
-            Page title
-        description : str
-            Page description
-        output_filename : str
-            Output markdown filename (e.g., 'tools.md')
-        exclude_files : List[str]
+        exclude_files : List[str] (optional)
             List of filenames to explicitly exclude from individual entries
+            (if None, reads from catalog.json)
         """
+        # Load from catalog.json if parameters not provided
+        catalog_data = self.load_catalog_json(directory)
+
+        if title is None:
+            title = catalog_data['title'] or directory.name
+        if description is None:
+            description = catalog_data['description']
+        if model_definitions is None:
+            model_definitions = catalog_data['models']
+        if exclude_files is None:
+            exclude_files = catalog_data['exclude_files']
+
+        # Default to empty dict/list if still None
+        model_definitions = model_definitions or {}
+        exclude_files = exclude_files or []
         models = []
         exclude_files = exclude_files or []
 
@@ -228,8 +268,8 @@ class ModelCatalogGenerator:
         for model_id, model_info in model_definitions.items():
             if 'files' in model_info:
                 # Model with explicit file specification (single or grouped)
-                # First STL file becomes the primary (for image rendering)
-                file_paths = [self.repo_root / f for f in model_info['files']]
+                # Resolve paths relative to the directory containing catalog.json
+                file_paths = [(directory / f).resolve() for f in model_info['files']]
 
                 # Find first STL file to use as primary
                 primary_file = None
@@ -253,7 +293,8 @@ class ModelCatalogGenerator:
 
                     # Override image if custom one is specified
                     if 'image' in model_info:
-                        image_file = self.repo_root / model_info['image']
+                        # Resolve image path relative to the directory
+                        image_file = (directory / model_info['image']).resolve()
                         if image_file.exists():
                             import shutil
                             dest_image = self.rendered_dir / f"{model_id}.png"
@@ -283,193 +324,29 @@ class ModelCatalogGenerator:
 
     def generate_tools_page(self):
         """Generate tools catalog page"""
-        model_definitions = {
-            'Scalpel': {
-                'description': "Generic scalpel (100mm long handle, 20mm long blade)."
-            },
-            'Cautery': {
-                'description': "Generic cautery (95mm long handle, 20mm long blade)."
-            },
-            'Needle_BardDuaLok57': {
-                'description': "Bard DuaLok57 double-hook needle (without hooks)."
-            },
-            'Stylus_100mm': {
-                'description': "Pointer tool with built-in sensor holder. 100mm long, sharp tip.",
-                'files': ['TrackingFixtures/Stylus_100mm.stl']
-            },
-            'Stylus_60mm': {
-                'description': "Pointer tool with built-in sensor holder. 60mm long, sharp tip.",
-                'files': ['TrackingFixtures/Stylus_60mm.stl']
-            },
-            'Stylus_Candycane_100mm_WithHolder': {
-                'description': "Pointer tool with built-in sensor holder. 100mm long, curved tip for ultrasound calibration.",
-                'files': ['TrackingFixtures/Stylus_Candycane_100mm_WithHolder.stl']
-            },
-            'Stylus_Candycane_70mm_1.0': {
-                'description': "Pointer tool with built-in sensor holder. 70mm long, curved tip for ultrasound calibration.",
-                'files': ['TrackingFixtures/Stylus_Candycane_70mm_1.0.stl']
-            },
-            'UsProbe_SPL40': {
-                'description': "Mock linear ultrasound probe (width: 40mm)"
-            },
-            'UsProbe_Ultrasonix_L14-5_38': {
-                'description': "Ultrasonix L14-5/38 linear ultrasound probe."
-            },
-            'UsProbe_Ultrasonix_C5-2_60': {
-                'description': "Ultrasonix C5-2/60 curvilinear ultrasound probe."
-            },
-            'UsProbe_Ultrasonix_EC9-5_10': {
-                'description': "Ultrasonix EC9-5/10 endocavity curvilinear ultrasound probe."
-            },
-            'UsProbe_Telemed_L12': {
-                'description': "Telemed L12 linear ultrasound probe."
-            },
-        }
-
         self.generate_catalog_page(
             directory=self.repo_root / 'Tools',
-            model_definitions=model_definitions,
-            title="Tools",
-            description="Tracking tools, ultrasound probes, and surgical instruments for image-guided interventions.",
             output_filename='tools.md'
         )
 
     def generate_tracking_fixtures_page(self):
         """Generate tracking fixtures catalog page"""
-        model_definitions = {
-            'Block4x4-ThreeHoles': {
-                'description': "Block of solid material 40x40x14 mm size, with an extruded interface with three M4 holes 7 mm apart. The block can be edited to cut out an anatomical part, so the final product will interface with an anatomy."
-            },
-            'CauteryGrabber': {
-                'description': "New version for fixing a tracker to a cautery. For clamp tightening use hex-head cap screw, M6 thread, 30 mm long with a matching wing nut. For assembly with SensorHolder-OneHole use M4 bolt."
-            },
-            'SensorHolder_Wing_1.0': {
-                'description': "Clip to mount a MarkerHolder or 8mm Ascension EM sensor to an object. With a wing to make it easier to fix it by glue or screws."
-            },
-            'Stylus_Polaris': {
-                'description': "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND",
-                'files': ['TrackingFixtures/StealthStation/Stylus_Polaris.STL']
-            },
-            'Ultrasound_Polaris': {
-                'description': "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND",
-                'files': ['TrackingFixtures/StealthStation/Ultrasound_Polaris.STL']
-            },
-            'ArmL-30': {
-                'description': "Connector between e.g. an ultrasound clip and polaris markers.",
-                'files': ['TrackingFixtures/ArmL-30.STL']
-            },
-            'NeedleClip-Assembly_16-20G': {
-                'description': "Clamps to a needle of size 16-20 G through a sterile bag."
-            },
-            'SensorHolder_2.0': {
-                'description': "New sensor holder design. This will replace SensorHolder-Ordered_2mm_1.0 eventually. Holds either a Model 800 Ascension EM sensor, or another PLUS fixture, e.g. for holding MicronTracker markers. This part is frequently part of an assembly, but can also be used by itself."
-            },
-            'SensorHolder-OneHole': {
-                'description': "Holds a Model 800 sensor, and has a hole to fix to other printed components."
-            },
-            'OrientationLR-Plane': {
-                'description': "This is the most simple reference sensor holder to be used on patients. In a certain surgical setting (e.g. when stuck on the chest) this defines the patient orientation. This allows saving virtual camera positions."
-            },
-            'Telemed-MicrUs-L12-SensorHolder': {
-                'description': 'Parts for tracking Telemed MicrUs L12 ultrasound probe',
-                'files': [
-                    'TrackingFixtures/Telemed-MicrUs-L12-SensorHolder.stl',
-                    'TrackingFixtures/TelemedHolder_L12_MarkedSide.stl',
-                    'TrackingFixtures/TelemedHolder-L12_UnmarkedSide.stl'
-                ]
-            },
-            'Telemed-L12-ClipOn': {
-                'description': 'A plastic holder for the Telemed L12 ultrasound probe, without moving parts.',
-                'files': ['TrackingFixtures/Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL']
-            },
-            'GeMl615D_Clip_v01': {
-                'description': 'Clip-on part for GE ML6-15-D ultrasound probe.',
-                'files': ['TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.STL'],
-                'image': 'TrackingFixtures/GE_ML6-15-D/GeMl615D_Clip_v01.png'
-            },
-            'PolarisAscensionPlane': {
-                'description': 'Part that can be tracked by both Polaris and Ascension trackers',
-                'files': [
-                    'TrackingFixtures/MultiModalityTracking/PolarisAscensionPlane.STL',
-                    'TrackingFixtures/MultiModalityTracking/PolarisAscensionPlane.rom'
-                ],
-            }
-        }
-
-        # Exclude stylus files that are in Tools category
-        exclude_files = [
-            'Stylus_100mm.stl',
-            'Stylus_60mm.stl',
-            'Stylus_Candycane_100mm_WithHolder.stl',
-            'Stylus_Candycane_70mm_1.0.stl',
-        ]
-
         self.generate_catalog_page(
             directory=self.repo_root / 'TrackingFixtures',
-            model_definitions=model_definitions,
-            title="Tracking Fixtures",
-            description="Fixtures for mounting tracker markers (optical and electromagnetic) on tools and objects.",
-            output_filename='tracking-fixtures.md',
-            exclude_files=exclude_files
+            output_filename='tracking-fixtures.md'
         )
 
     def generate_fcal_phantoms_page(self):
         """Generate fCal phantoms catalog page"""
-        model_definitions = {
-            'fCal-2.0': {
-                'description': 'Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).',
-                'files': ['fCalPhantom/fCal_2/fCal_2.0.stl'],
-                'image': 'fCalPhantom/fCal_2/PhantomDefinition_fCal_2.0_Wiring_2.0.png'
-            },
-            'fCal-2.1': {
-                'description': 'Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).',
-                'files': ['fCalPhantom/fCal_2/fCal_2.1.stl']
-            },
-            'fCal-3.1': {
-                'description': 'Phantom for freehand spatial ultrasound calibration for deep structures (up to 30 cm).',
-                'files': [
-                    'fCalPhantom/fCal_3/fCal_3.1.stl',
-                    'fCalPhantom/fCal_3/fCal_3.1_back.stl',
-                    'fCalPhantom/fCal_3/fCal_3.1_front.stl',
-                    'fCalPhantom/fCal_3/fCal_3.1_left.stl',
-                    'fCalPhantom/fCal_3/fCal_3.1_spacer.stl'
-                ],
-                'image': 'fCalPhantom/fCal_3/fCal3.1.png'
-            },
-            'fCal_Echo1.0': {
-                'description': 'Phantom for freehand spatial ultrasound calibration of tube-shaped echo probes such as intracardiac echo (ICE) catheters and transesophageal echo (TEE) probes. Developed by Robert Kreher ([Otto-von-Guericke-University Magdeburg, Germany](https://www.ovgu.de/), [Stimulate Research Campus](https://www.forschungscampus-stimulate.de/)).',
-                'files': ['fCalPhantom/fCal_Echo/fCal_Echo1.0.stl'],
-                'image': 'fCalPhantom/fCal_Echo/fCal_Echo1.0.png'
-            }
-        }
-
         self.generate_catalog_page(
             directory=self.repo_root / 'fCalPhantom',
-            model_definitions=model_definitions,
-            title="fCal Calibration Phantoms",
-            description="Calibration phantoms for ultrasound probe calibration and validation.",
             output_filename='fcal-phantoms.md'
         )
 
     def generate_anatomy_page(self):
         """Generate anatomy models catalog page"""
-        model_definitions = {
-            'HumanSimple': {
-                'description': 'Simple low-polygon human body model.'
-            },
-            'LumbarSpinePhantom': {
-                'description': 'Printable 3D model of the lumbar spine with matching CT image. Note that lowest vertebra is moved in the printable model compared to CT.',
-                'files': [
-                    'Anatomy/LumbarSpinePhantom.stl',
-                    'Anatomy/LumbarSpinePhantom_CT.mha'
-                ]
-            }
-        }
         self.generate_catalog_page(
             directory=self.repo_root / 'Anatomy',
-            model_definitions=model_definitions,
-            title="Anatomy Models",
-            description="Anatomical models for simulation and training.",
             output_filename='anatomy.md'
         )
 
@@ -477,9 +354,6 @@ class ModelCatalogGenerator:
         """Generate needle tutor catalog page"""
         self.generate_catalog_page(
             directory=self.repo_root / 'UsNeedleTutor',
-            model_definitions={},
-            title="Needle Tutor Components",
-            description="Components for ultrasound-guided needle insertion training system.",
             output_filename='needletutor.md'
         )
 

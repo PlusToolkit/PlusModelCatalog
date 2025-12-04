@@ -1,0 +1,16 @@
+{
+  "title": "Anatomy Models",
+  "description": "Anatomical models for simulation and training.",
+  "models": {
+    "HumanSimple": {
+      "description": "Simple low-polygon human body model."
+    },
+    "LumbarSpinePhantom": {
+      "description": "Printable 3D model of the lumbar spine with matching CT image. Note that lowest vertebra is moved in the printable model compared to CT.",
+      "files": [
+        "LumbarSpinePhantom.stl",
+        "LumbarSpinePhantom_CT.mha"
+      ]
+    }
+  }
+}

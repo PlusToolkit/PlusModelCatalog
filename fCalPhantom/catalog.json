@@ -1,0 +1,31 @@
+{
+  "title": "fCal Calibration Phantoms",
+  "description": "Calibration phantoms for ultrasound probe calibration and validation.",
+  "models": {
+    "fCal-2.0": {
+      "description": "Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).",
+      "files": ["fCal_2/fCal_2.0.stl"],
+      "image": "fCal_2/PhantomDefinition_fCal_2.0_Wiring_2.0.png"
+    },
+    "fCal-2.1": {
+      "description": "Phantom for freehand spatial ultrasound calibration for shallow depth (up to 9 cm).",
+      "files": ["fCal_2/fCal_2.1.stl"]
+    },
+    "fCal-3.1": {
+      "description": "Phantom for freehand spatial ultrasound calibration for deep structures (up to 30 cm).",
+      "files": [
+        "fCal_3/fCal_3.1.stl",
+        "fCal_3/fCal_3.1_back.stl",
+        "fCal_3/fCal_3.1_front.stl",
+        "fCal_3/fCal_3.1_left.stl",
+        "fCal_3/fCal_3.1_spacer.stl"
+      ],
+      "image": "fCal_3/fCal3.1.png"
+    },
+    "fCal_Echo1.0": {
+      "description": "Phantom for freehand spatial ultrasound calibration of tube-shaped echo probes such as intracardiac echo (ICE) catheters and transesophageal echo (TEE) probes.\n\nDeveloped by Robert Kreher ([Otto-von-Guericke-University Magdeburg, Germany](https://www.ovgu.de/), [Stimulate Research Campus](https://www.forschungscampus-stimulate.de/)).",
+      "files": ["fCal_Echo/fCal_Echo1.0.stl"],
+      "image": "fCal_Echo/fCal_Echo1.0.png"
+    }
+  }
+}

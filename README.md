@@ -49,18 +49,34 @@ start _build\html\index.html
 
 ## Adding New Models
 
-1. Add STL file to appropriate directory (Tools, TrackingFixtures, etc.)
-2. Commit to repository
-3. Documentation automatically regenerates on next build
+1. Add STL file to the appropriate directory (Tools, TrackingFixtures, etc.)
+2. Edit the corresponding `catalog.json` file in that directory to add model metadata:
+   - Add a description
+   - Optionally specify explicit files if not auto-discovered
+   - Optionally specify a custom preview image
+3. Commit to repository
+4. Documentation automatically regenerates on ReadTheDocs
 
-To add descriptions, edit the model info dictionaries in `generate_catalog.py`.
+### Example: Adding a New Tool
+
+```json
+// Edit Tools/catalog.json
+{
+  "models": {
+    "MyNewTool": {
+      "description": "Description of my new tool with its dimensions and purpose.",
+      "files": ["MyNewTool.stl"]  // Optional if file matches model ID
+    }
+  }
+}
+```
 
 ## Contributing
 
 Contributions of new models are welcome! Please ensure:
 - STL files are clean and printable
 - Include source CAD files when possible
-- Add appropriate descriptions in `generate_catalog.py`
+- Add appropriate descriptions in the `catalog.json` file in the model's folder
 
 ## Migration from CMake
 

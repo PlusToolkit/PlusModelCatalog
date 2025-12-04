@@ -1,0 +1,69 @@
+{
+  "title": "Tracking Fixtures",
+  "description": "Fixtures for mounting tracker markers (optical and electromagnetic) on tools and objects.",
+  "exclude_files": [
+    "Stylus_100mm.stl",
+    "Stylus_60mm.stl",
+    "Stylus_Candycane_100mm_WithHolder.stl",
+    "Stylus_Candycane_70mm_1.0.stl"
+  ],
+  "models": {
+    "Block4x4-ThreeHoles": {
+      "description": "Block of solid material 40x40x14 mm size, with an extruded interface with three M4 holes 7 mm apart. The block can be edited to cut out an anatomical part, so the final product will interface with an anatomy."
+    },
+    "CauteryGrabber": {
+      "description": "New version for fixing a tracker to a cautery. For clamp tightening use hex-head cap screw, M6 thread, 30 mm long with a matching wing nut. For assembly with SensorHolder-OneHole use M4 bolt."
+    },
+    "SensorHolder_Wing_1.0": {
+      "description": "Clip to mount a MarkerHolder or 8mm Ascension EM sensor to an object. With a wing to make it easier to fix it by glue or screws."
+    },
+    "Stylus_Polaris": {
+      "description": "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND",
+      "files": ["StealthStation/Stylus_Polaris.STL"]
+    },
+    "Ultrasound_Polaris": {
+      "description": "Optical marker with slots to insert NDI Polaris pegs to hold reflective spheres. To fix the NDI pegs for spheres, order this product from DigiKey: Round Standoff Threaded #4-40 Steel 0.063'' (1.60mm) 1/16''. DigiKey part number: 36-4881CT-ND",
+      "files": ["StealthStation/Ultrasound_Polaris.STL"]
+    },
+    "ArmL-30": {
+      "description": "Connector between e.g. an ultrasound clip and polaris markers.",
+      "files": ["ArmL-30.STL"]
+    },
+    "NeedleClip-Assembly_16-20G": {
+      "description": "Clamps to a needle of size 16-20 G through a sterile bag."
+    },
+    "SensorHolder_2.0": {
+      "description": "New sensor holder design. This will replace SensorHolder-Ordered_2mm_1.0 eventually. Holds either a Model 800 Ascension EM sensor, or another PLUS fixture, e.g. for holding MicronTracker markers. This part is frequently part of an assembly, but can also be used by itself."
+    },
+    "SensorHolder-OneHole": {
+      "description": "Holds a Model 800 sensor, and has a hole to fix to other printed components."
+    },
+    "OrientationLR-Plane": {
+      "description": "This is the most simple reference sensor holder to be used on patients. In a certain surgical setting (e.g. when stuck on the chest) this defines the patient orientation. This allows saving virtual camera positions."
+    },
+    "Telemed-MicrUs-L12-SensorHolder": {
+      "description": "Parts for tracking Telemed MicrUs L12 ultrasound probe",
+      "files": [
+        "Telemed-MicrUs-L12-SensorHolder.stl",
+        "TelemedHolder_L12_MarkedSide.stl",
+        "TelemedHolder-L12_UnmarkedSide.stl"
+      ]
+    },
+    "Telemed-L12-ClipOn": {
+      "description": "A plastic holder for the Telemed L12 ultrasound probe, without moving parts.",
+      "files": ["Telemed-MicruUs-L12/Telemed-L12-ClipOn.STL"]
+    },
+    "GeMl615D_Clip_v01": {
+      "description": "Clip-on part for GE ML6-15-D ultrasound probe.",
+      "files": ["GE_ML6-15-D/GeMl615D_Clip_v01.STL"],
+      "image": "GE_ML6-15-D/GeMl615D_Clip_v01.png"
+    },
+    "PolarisAscensionPlane": {
+      "description": "Part that can be tracked by both Polaris and Ascension trackers",
+      "files": [
+        "MultiModalityTracking/PolarisAscensionPlane.STL",
+        "MultiModalityTracking/PolarisAscensionPlane.rom"
+      ]
+    }
+  }
+}

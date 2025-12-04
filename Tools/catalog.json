@@ -1,0 +1,46 @@
+{
+  "title": "Tools",
+  "description": "Tracking tools, ultrasound probes, and surgical instruments for image-guided interventions.",
+  "models": {
+    "Scalpel": {
+      "description": "Generic scalpel (100mm long handle, 20mm long blade)."
+    },
+    "Cautery": {
+      "description": "Generic cautery (95mm long handle, 20mm long blade)."
+    },
+    "Needle_BardDuaLok57": {
+      "description": "Bard DuaLok57 double-hook needle (without hooks)."
+    },
+    "Stylus_100mm": {
+      "description": "Pointer tool with built-in sensor holder. 100mm long, sharp tip.",
+      "files": ["../TrackingFixtures/Stylus_100mm.stl"]
+    },
+    "Stylus_60mm": {
+      "description": "Pointer tool with built-in sensor holder. 60mm long, sharp tip.",
+      "files": ["../TrackingFixtures/Stylus_60mm.stl"]
+    },
+    "Stylus_Candycane_100mm_WithHolder": {
+      "description": "Pointer tool with built-in sensor holder. 100mm long, curved tip for ultrasound calibration.",
+      "files": ["../TrackingFixtures/Stylus_Candycane_100mm_WithHolder.stl"]
+    },
+    "Stylus_Candycane_70mm_1.0": {
+      "description": "Pointer tool with built-in sensor holder. 70mm long, curved tip for ultrasound calibration.",
+      "files": ["../TrackingFixtures/Stylus_Candycane_70mm_1.0.stl"]
+    },
+    "UsProbe_SPL40": {
+      "description": "Mock linear ultrasound probe (width: 40mm)"
+    },
+    "UsProbe_Ultrasonix_L14-5_38": {
+      "description": "Ultrasonix L14-5/38 linear ultrasound probe."
+    },
+    "UsProbe_Ultrasonix_C5-2_60": {
+      "description": "Ultrasonix C5-2/60 curvilinear ultrasound probe."
+    },
+    "UsProbe_Ultrasonix_EC9-5_10": {
+      "description": "Ultrasonix EC9-5/10 endocavity curvilinear ultrasound probe."
+    },
+    "UsProbe_Telemed_L12": {
+      "description": "Telemed L12 linear ultrasound probe."
+    }
+  }
+}
