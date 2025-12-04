@@ -78,15 +78,6 @@ Contributions of new models are welcome! Please ensure:
 - Include source CAD files when possible
 - Add appropriate descriptions in the `catalog.json` file in the model's folder
 
-## Migration from CMake
-
-This repository previously used CMake + VTK + custom C++ tools. The new system:
-- Uses Python + VTK instead of C++ + VTK
-- Generates markdown instead of HTML directly
-- Uses Sphinx for documentation generation
-- Integrates with ReadTheDocs for hosting
-- Maintains the same table format and download links
-
 ## Support
 
 For questions about the Plus Toolkit, visit:
